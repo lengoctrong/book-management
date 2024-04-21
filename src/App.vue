@@ -1,12 +1,24 @@
-<template>
-  <header>
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-    </nav>
-  </header>
+<script>
+import AppHeader from '@/components/AppHeader.vue'
+export default {
+  components: {
+    AppHeader
+  }
+}
+</script>
 
-  <RouterView />
+<template>
+  <div id="app">
+    <AppHeader />
+    <div class="container mt-3">
+      <router-view />
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<style>
+.page {
+  max-width: 400px;
+  margin: auto;
+}
+</style>
