@@ -50,8 +50,8 @@
           <i class="fas fa-address-card"></i>
         </h4>
         <BookCard :book="activeBook" />
-        <router-link :to="{ name: 'book.edit', params: { id: activeBook._id } }">
-          <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Hiệu chỉnh </span>
+        <router-link :to="{ name: 'book.borrow', params: { id: activeBook._id } }">
+          <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Đăng ký mượn </span>
         </router-link>
       </div>
     </div>
@@ -94,8 +94,8 @@ export default {
     },
     booksStrings() {
       return this.books.map((book) => {
-        const { title, author, years, image, quantity, borrow } = book
-        return [title, author, years, image, quantity, borrow].join('')
+        const { title, author, years, image, quantity, borrow, category } = book
+        return [title, author, years, image, quantity, borrow, category].join('')
       })
     },
     filteredBooks() {
