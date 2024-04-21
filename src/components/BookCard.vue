@@ -12,7 +12,7 @@ export default {
 <template>
   <div>
     <div class="p-1" style="height: 350px">
-      <img :src="book.image" alt="book.title" class="img-fluid" style="width: 100%; height: 100%" />
+      <img :src="book.image" alt="book info" class="img-fluid" style="width: 100%; height: 100%" />
     </div>
     <div class="p-1">
       <strong>Tên: </strong>
@@ -27,12 +27,12 @@ export default {
       {{ book.years }}
     </div>
     <div class="p-1">
-      <strong>Điện thoại: </strong>
-      {{ book.phone }}
+      <strong>Số lượng: </strong>
+      {{ book.quantity }}
     </div>
     <div class="p-1">
-      <strong>Sách yêu thích :&nbsp;</strong>
-      <i v-if="book.favorite" class="fas fa-check"></i>
+      <strong>Sách đã mượn :&nbsp;</strong>
+      <i v-if="book.borrow" class="fas fa-check"></i>
       <i v-else class="fas fa-times"></i>
     </div>
   </div>
