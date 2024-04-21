@@ -27,11 +27,15 @@ export default {
       {{ book.years }}
     </div>
     <div class="p-1">
-      <strong>Số lượng: </strong>
-      {{ book.quantity }}
+      <strong>Thể loại: </strong>
+      {{ book.category }}
     </div>
     <div class="p-1">
-      <strong>Sách đã mượn :&nbsp;</strong>
+      <strong>Số lượng: </strong>
+      {{ book.quantity }} (cuốn)
+    </div>
+    <div class="p-1">
+      <strong>Đã có người mượn :&nbsp;</strong>
       <i v-if="book.borrow" class="fas fa-check"></i>
       <i v-else class="fas fa-times"></i>
     </div>
