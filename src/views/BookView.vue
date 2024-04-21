@@ -8,20 +8,38 @@
         Sách
         <i class="fas fa-book"></i>
       </h4>
+
+      <!-- <div class="mt-3 my-3 row justify-content-around align-items-center">
+        <button class="btn btn-sm btn-primary" @click="refreshList()">
+          <i class="fas fa-plus"></i> Thêm mới
+        </button>
+        <button class="btn btn-sm btn-danger" @click="removeAllbooks()">
+          <i class="fas fa-trash"></i> Xóa tất cả
+        </button>
+      </div> -->
+
       <BookList
-        v-if="filteredBooksCount > 0"
-        :books="filteredBooks"
+        v-if="paginatedBooks.length > 0"
+        :books="paginatedBooks"
         v-model:activeIndex="activeIndex"
       />
       <p v-else>Không có sách nào.</p>
 
-      <div class="mt-3 row justify-content-around align-items-center">
-        <button class="btn btn-sm btn-primary" @click="refreshList()">
-          <i class="fas fa-plus"></i> Thêm mới
+      <div class="d-flex align-items-center justify-content-around mt-3">
+        <button
+          class="btn bg-primary rounded-lg text-white"
+          @click="currentPage--"
+          :disabled="currentPage <= 1"
+        >
+          Previous
         </button>
-
-        <button class="btn btn-sm btn-danger" @click="removeAllbooks()">
-          <i class="fas fa-trash"></i> Xóa tất cả
+        <span>Page {{ currentPage }}/ {{ totalPageCount }}</span>
+        <button
+          class="btn bg-primary rounded-lg text-white"
+          @click="currentPage++"
+          :disabled="currentPage >= totalPageCount"
+        >
+          Next
         </button>
       </div>
     </div>
@@ -55,7 +73,9 @@ export default {
     return {
       books: [],
       searchText: '',
-      activeIndex: -1
+      activeIndex: -1,
+      currentPage: 1,
+      pageSize: 10
     }
   },
   watch: {
@@ -64,17 +84,26 @@ export default {
     }
   },
   computed: {
-    bookStrings() {
+    totalPageCount() {
+      return Math.ceil(this.filteredBooks.length / this.pageSize)
+    },
+    paginatedBooks() {
+      const start = (this.currentPage - 1) * this.pageSize
+      const end = start + this.pageSize
+      return this.filteredBooks.slice(start, end)
+    },
+    booksStrings() {
       return this.books.map((book) => {
-        const { title, author, years, image, borrow } = book
-        return [title, author, years, image, borrow].join('')
+        const { title, author, years, image, quantity, borrow } = book
+        return [title, author, years, image, quantity, borrow].join('')
       })
     },
     filteredBooks() {
       if (!this.searchText) return this.books
-      return this.books.filter((_book, index) => {
-        return this.booksStrings[index].includes(this.searchText)
-      })
+
+      return this.books.filter((book) =>
+        book.title.toLowerCase().includes(this.searchText.toLowerCase())
+      )
     },
     activeBook() {
       if (this.activeIndex < 0) return null
@@ -86,10 +115,13 @@ export default {
   },
   methods: {
     async retrieveBooks() {
+      this.isLoading = true
       try {
         this.books = await BookService.getAll()
       } catch (error) {
         console.log(error)
+      } finally {
+        this.isLoading = false
       }
     },
     refreshList() {
