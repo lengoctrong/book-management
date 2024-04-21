@@ -26,13 +26,13 @@
       </div>
     </div>
     <div class="mt-3 col-md-6">
-      <div v-if="activebook">
+      <div v-if="activeBook">
         <h4>
           Chi tiết Sách
           <i class="fas fa-address-card"></i>
         </h4>
-        <BookCard :book="activebook" />
-        <router-link :to="{ name: 'book.edit', params: { id: activebook._id } }">
+        <BookCard :book="activeBook" />
+        <router-link :to="{ name: 'book.edit', params: { id: activeBook._id } }">
           <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Hiệu chỉnh </span>
         </router-link>
       </div>
@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import BookList from '@/components/BookList.vue'
 import BookCard from '@/components/BookCard.vue'
+import BookList from '@/components/BookList.vue'
 import InputSearch from '@/components/InputSearch.vue'
 import BookService from '@/services/bookService'
 export default {
@@ -66,8 +66,8 @@ export default {
   computed: {
     bookStrings() {
       return this.books.map((book) => {
-        const { name, email, address, phone } = book
-        return [name, email, address, phone].join('')
+        const { title, author, years, image, borrow } = book
+        return [title, author, years, image, borrow].join('')
       })
     },
     filteredBooks() {

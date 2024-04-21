@@ -1,9 +1,10 @@
 <script>
 export default {
   props: {
-    contacts: {
+    books: {
       type: Array,
-      default: () => []
+      // eslint-disable-next-line vue/require-valid-default-prop
+      default: []
     },
     activeIndex: {
       type: Number,
@@ -23,12 +24,13 @@ export default {
   <ul class="list-group">
     <li
       class="list-group-item"
+      style="cursor: pointer"
       v-for="(book, index) in books"
       :key="book._id"
       :class="{ active: index === activeIndex }"
       @click="updateActiveIndex(index)"
     >
-      {{ book.name }}
+      {{ book.title }}
     </li>
   </ul>
 </template>
