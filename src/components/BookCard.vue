@@ -1,9 +1,16 @@
 <script>
+import BookService from '@/services/bookService'
 export default {
   props: {
     book: {
       type: Object,
       require: true
+    }
+  },
+  methods: {
+    async borrowBook() {
+      const data = await BookService.create({ test: '123' })
+      console.log(data)
     }
   }
 }
@@ -32,12 +39,10 @@ export default {
     </div>
     <div class="p-1">
       <strong>Số lượng: </strong>
-      {{ book.quantity }} (cuốn)
+      {{ book.quantity > 0 ? book.quantity : 'Đã hết' }} (cuốn)
     </div>
-    <div class="p-1">
-      <strong>Đã có người mượn :&nbsp;</strong>
-      <i v-if="book.borrow" class="fas fa-check"></i>
-      <i v-else class="fas fa-times"></i>
-    </div>
+    <button class="mt-2 badge badge-warning border" @click="borrowBook">
+      <i class="fas fa-edit"></i> Đăng ký mượn
+    </button>
   </div>
 </template>

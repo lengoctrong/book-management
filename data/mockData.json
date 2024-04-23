@@ -6,7 +6,7 @@
     "years": 2024,
     "image": "https://source.unsplash.com/featured/?book&1",
     "quantity": 8,
-    "borrow": true,
+    "borrow": false,
     "category": "Fiction"
   },
   {
@@ -26,7 +26,7 @@
     "years": 2022,
     "image": "https://source.unsplash.com/featured/?book&3",
     "quantity": 5,
-    "borrow": true,
+    "borrow": false,
     "category": "Romance"
   },
   {
@@ -46,7 +46,7 @@
     "years": 2020,
     "image": "https://source.unsplash.com/featured/?book&5",
     "quantity": 3,
-    "borrow": true,
+    "borrow": false,
     "category": "Adventure"
   },
   {
@@ -66,7 +66,7 @@
     "years": 2018,
     "image": "https://source.unsplash.com/featured/?book&7",
     "quantity": 7,
-    "borrow": true,
+    "borrow": false,
     "category": "Science Fiction"
   },
   {
@@ -86,7 +86,7 @@
     "years": 2016,
     "image": "https://source.unsplash.com/featured/?book&9",
     "quantity": 2,
-    "borrow": true,
+    "borrow": false,
     "category": "Epic Poetry"
   },
   {
@@ -106,7 +106,7 @@
     "years": 2014,
     "image": "https://source.unsplash.com/featured/?book&11",
     "quantity": 16,
-    "borrow": true,
+    "borrow": false,
     "category": "Adventure"
   },
   {
@@ -126,7 +126,7 @@
     "years": 2012,
     "image": "https://source.unsplash.com/featured/?book&13",
     "quantity": 11,
-    "borrow": true,
+    "borrow": false,
     "category": "Science Fiction"
   },
   {
@@ -146,7 +146,7 @@
     "years": 2010,
     "image": "https://source.unsplash.com/featured/?book&15",
     "quantity": 1,
-    "borrow": true,
+    "borrow": false,
     "category": "Psychological Fiction"
   },
   {
@@ -166,7 +166,7 @@
     "years": 2008,
     "image": "https://source.unsplash.com/featured/?book&17",
     "quantity": 6,
-    "borrow": true,
+    "borrow": false,
     "category": "Philosophical Novel"
   },
   {
@@ -186,7 +186,7 @@
     "years": 2006,
     "image": "https://source.unsplash.com/featured/?book&19",
     "quantity": 17,
-    "borrow": true,
+    "borrow": false,
     "category": "Romance"
   },
   {

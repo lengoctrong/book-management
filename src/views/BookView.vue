@@ -4,20 +4,14 @@
       <InputSearch v-model="searchText" />
     </div>
     <div class="mt-3 col-md-6">
-      <h4>
-        Sách
-        <i class="fas fa-book"></i>
-      </h4>
-
-      <!-- <div class="mt-3 my-3 row justify-content-around align-items-center">
-        <button class="btn btn-sm btn-primary" @click="refreshList()">
-          <i class="fas fa-plus"></i> Thêm mới
-        </button>
-        <button class="btn btn-sm btn-danger" @click="removeAllbooks()">
-          <i class="fas fa-trash"></i> Xóa tất cả
-        </button>
-      </div> -->
-
+      <div class="d-flex justify-content-between">
+        <router-link to="/books">
+          <h4>
+            Sách
+            <i class="fas fa-book"></i>
+          </h4>
+        </router-link>
+      </div>
       <BookList
         v-if="paginatedBooks.length > 0"
         :books="paginatedBooks"
@@ -31,7 +25,7 @@
           @click="currentPage--"
           :disabled="currentPage <= 1"
         >
-          Previous
+          Trước
         </button>
         <span>Page {{ currentPage }}/ {{ totalPageCount }}</span>
         <button
@@ -39,7 +33,7 @@
           @click="currentPage++"
           :disabled="currentPage >= totalPageCount"
         >
-          Next
+          Sau
         </button>
       </div>
     </div>
@@ -50,9 +44,6 @@
           <i class="fas fa-address-card"></i>
         </h4>
         <BookCard :book="activeBook" />
-        <router-link :to="{ name: 'book.borrow', params: { id: activeBook._id } }">
-          <span class="mt-2 badge badge-warning"> <i class="fas fa-edit"></i> Đăng ký mượn </span>
-        </router-link>
       </div>
     </div>
   </div>
@@ -127,21 +118,6 @@ export default {
     refreshList() {
       this.retrieveBooks()
       this.activeIndex = -1
-    },
-    async removeAllBooks() {
-      if (confirm('Bạn muốn xóa tất cả Sách?')) {
-        try {
-          await BookService.removeAll()
-          this.books = []
-          this.activeIndex = -1
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    },
-
-    gotoAddBook() {
-      this.$router.push({ name: 'book.add' })
     }
   },
   mounted() {

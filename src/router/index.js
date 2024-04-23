@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import BookBorrow from '../views/BookBorrow.vue'
 import BookView from '../views/BookView.vue'
+import UserAuth from '../views/UserAuth.vue'
 
 const routes = [
   {
@@ -13,12 +13,10 @@ const routes = [
     name: 'book',
     component: BookView
   },
-
   {
-    path: '/book-borrow',
-    alias: '/',
-    name: 'book.borrow',
-    component: BookBorrow
+    path: '/auth',
+    name: 'auth',
+    component: UserAuth
   },
 
   {
