@@ -3,12 +3,24 @@
     <base-card>
       <div class="form-control-custom">
         <label for="email">E-Mail</label>
-        <input type="email" id="email" v-model.trim="email" />
+        <input
+          @input="error = ''"
+          autocomplete="username"
+          type="email"
+          id="email"
+          v-model.trim="email"
+        />
       </div>
       <div class="form-control-custom">
         <label for="password">Mật khẩu</label>
-        <input type="password" id="password" v-model.trim="password" />
+        <input
+          autocomplete="current-password"
+          type="password"
+          id="password"
+          v-model.trim="password"
+        />
       </div>
+      <p v-if="error" class="text-danger font-weight-bold">{{ error.message }}</p>
       <div class="d-flex">
         <p v-if="!formIsValid"></p>
         <base-button>{{ submitButtonCaption }}</base-button>
@@ -29,7 +41,8 @@ export default {
       email: '',
       password: '',
       formIsValid: true,
-      mode: 'login'
+      mode: 'login',
+      error: null
     }
   },
   computed: {
@@ -49,21 +62,32 @@ export default {
     }
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       this.formIsValid = true
       if (this.email === '' || !this.email.includes('@') || this.password.length < 6) {
         this.formIsValid = false
         return
       }
       // send http request
-      if (this.mode === 'login') {
-        // ...
-      } else {
-        this.$store.dispatch('signup', {
-          email: this.email,
-          password: this.password
-        })
+      try {
+        if (this.mode === 'login') {
+          await this.$store.dispatch('login', {
+            email: this.email,
+            password: this.password,
+            type: 'login'
+          })
+        } else {
+          await this.$store.dispatch('signup', {
+            email: this.email,
+            password: this.password,
+            type: 'signup'
+          })
+        }
+      } catch (err) {
+        this.error = err
       }
+      this.email = ''
+      this.password = ''
     },
     switchAuthMode() {
       this.mode = this.mode === 'login' ? 'signup' : 'login'

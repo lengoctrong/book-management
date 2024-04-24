@@ -8,6 +8,11 @@
         ></router-link>
       </li>
     </div>
+    <div class="ml-auto navbar-nav">
+      <li class="nav-item">
+        <router-link :to="{ name: 'auth' }" class="nav-link">Đăng ký / Đăng nhập</router-link>
+      </li>
+    </div>
   </nav>
 </template>
 

@@ -7,9 +7,15 @@ class UserService {
   async getAll() {
     return (await this.api.get('/')).data
   }
+
   async create(data) {
-    return (await this.api.post('/', data)).data
+    try {
+      return (await this.api.post('/', data)).data
+    } catch (error) {
+      throw new Error(error.response.data.message)
+    }
   }
+
   async deleteAll() {
     return (await this.api.delete('/')).data
   }
