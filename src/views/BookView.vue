@@ -5,12 +5,10 @@
     </div>
     <div class="mt-3 col-md-6">
       <div class="d-flex justify-content-between">
-        <router-link to="/books">
-          <h4>
-            Sách
-            <i class="fas fa-book"></i>
-          </h4>
-        </router-link>
+        <h4>
+          Sách
+          <i class="fas fa-book"></i>
+        </h4>
       </div>
       <BookList
         v-if="paginatedBooks.length > 0"

@@ -8,7 +8,7 @@
         ></router-link>
       </li>
       <li class="nav-item" v-if="isAdmin">
-        <router-link :to="{ name: 'book' }" class="nav-link"
+        <router-link :to="{ name: 'book.add' }" class="nav-link"
           >Quản lý <i class="fas fa-book"></i
         ></router-link>
       </li>

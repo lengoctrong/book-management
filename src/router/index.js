@@ -1,3 +1,4 @@
+import BookAdd from '@/views/BookAdd.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import BookView from '../views/BookView.vue'
 import UserAuth from '../views/UserAuth.vue'
@@ -11,6 +12,12 @@ const routes = [
     alias: '/',
     name: 'book',
     component: BookView
+  },
+  {
+    path: '/book-add',
+    alias: '/',
+    name: 'book.add',
+    component: BookAdd
   },
   {
     path: '/auth',
