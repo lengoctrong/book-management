@@ -4,7 +4,8 @@ import mutations from './mutations.js'
 export default {
   state() {
     return {
-      userId: null
+      userId: null,
+      email: null
     }
   },
   mutations,

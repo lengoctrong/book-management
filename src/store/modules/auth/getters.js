@@ -4,5 +4,8 @@ export default {
   },
   isAuthenticated(state) {
     return !!state.userId
+  },
+  isAdmin(state) {
+    return state.email === 'admin@gmail.com'
   }
 }

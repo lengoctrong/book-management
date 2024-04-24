@@ -7,6 +7,11 @@
           >Loại sách <i class="fas fa-book"></i
         ></router-link>
       </li>
+      <li class="nav-item" v-if="isAdmin">
+        <router-link :to="{ name: 'book' }" class="nav-link"
+          >Quản lý <i class="fas fa-book"></i
+        ></router-link>
+      </li>
     </div>
     <div class="ml-auto navbar-nav">
       <li class="nav-item" v-if="!isAuthenticated">
@@ -28,6 +33,9 @@ export default {
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated
+    },
+    isAdmin() {
+      return this.$store.getters.isAdmin
     }
   },
   methods: {
