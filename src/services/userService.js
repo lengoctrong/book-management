@@ -10,7 +10,8 @@ class UserService {
 
   async create(data) {
     try {
-      return (await this.api.post('/', data)).data
+      const res = await this.api.post('/', data)
+      return res.data
     } catch (error) {
       throw new Error(error.response.data.message)
     }

@@ -3,7 +3,6 @@
     <base-card>
       <div class="form-control-custom">
         <label for="email">E-Mail</label>
-<<<<<<< HEAD
         <input
           @input="error = ''"
           autocomplete="username"
@@ -11,9 +10,6 @@
           id="email"
           v-model.trim="email"
         />
-=======
-        <input autocomplete="username" type="email" id="email" v-model.trim="email" />
->>>>>>> 6bf2b92554ef264a6626dbfcbba1d32c10e6f6cf
       </div>
       <div class="form-control-custom">
         <label for="password">Mật khẩu</label>
@@ -75,7 +71,6 @@ export default {
       // send http request
       try {
         if (this.mode === 'login') {
-<<<<<<< HEAD
           await this.$store.dispatch('login', {
             email: this.email,
             password: this.password,
@@ -90,17 +85,6 @@ export default {
         }
       } catch (err) {
         this.error = err
-=======
-          // ...
-        } else {
-          this.$store.dispatch('signup', {
-            email: this.email,
-            password: this.password
-          })
-        }
-      } catch (error) {
-        console.log(error)
->>>>>>> 6bf2b92554ef264a6626dbfcbba1d32c10e6f6cf
       }
       this.email = ''
       this.password = ''
