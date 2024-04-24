@@ -3,11 +3,16 @@
     <base-card>
       <div class="form-control-custom">
         <label for="email">E-Mail</label>
-        <input type="email" id="email" v-model.trim="email" />
+        <input autocomplete="username" type="email" id="email" v-model.trim="email" />
       </div>
       <div class="form-control-custom">
         <label for="password">Mật khẩu</label>
-        <input type="password" id="password" v-model.trim="password" />
+        <input
+          autocomplete="current-password"
+          type="password"
+          id="password"
+          v-model.trim="password"
+        />
       </div>
       <div class="d-flex">
         <p v-if="!formIsValid"></p>
@@ -56,13 +61,17 @@ export default {
         return
       }
       // send http request
-      if (this.mode === 'login') {
-        // ...
-      } else {
-        this.$store.dispatch('signup', {
-          email: this.email,
-          password: this.password
-        })
+      try {
+        if (this.mode === 'login') {
+          // ...
+        } else {
+          this.$store.dispatch('signup', {
+            email: this.email,
+            password: this.password
+          })
+        }
+      } catch (error) {
+        console.log(error)
       }
     },
     switchAuthMode() {
