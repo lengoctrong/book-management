@@ -10,6 +10,7 @@ export default {
   methods: {
     async borrowBook() {
       const data = await BookService.create({ test: '123' })
+      console.log(data)
     }
   }
 }

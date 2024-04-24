@@ -9,13 +9,32 @@
       </li>
     </div>
     <div class="ml-auto navbar-nav">
-      <li class="nav-item">
+      <li class="nav-item" v-if="!isAuthenticated">
         <router-link :to="{ name: 'auth' }" class="nav-link">Đăng ký / Đăng nhập</router-link>
+      </li>
+      <li class="nav-item" v-if="isAuthenticated">
+        <base-button class="nav-link text-white bg-primary" @click="logout">Đăng xuất</base-button>
       </li>
     </div>
   </nav>
 </template>
 
 <script>
-export default {}
+import BaseButton from '@/components/BaseButton.vue'
+export default {
+  components: {
+    BaseButton
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+      this.$router.replace('/auth')
+    }
+  }
+}
 </script>

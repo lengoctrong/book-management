@@ -13,7 +13,7 @@ class UserService {
       const res = await this.api.post('/', data)
       return res.data
     } catch (error) {
-      throw new Error(error.response.data.message)
+      throw new Error(error.response.data.message || 'Đã có lỗi xảy ra')
     }
   }
 

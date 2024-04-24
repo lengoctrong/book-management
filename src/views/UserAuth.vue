@@ -41,20 +41,20 @@ export default {
       email: '',
       password: '',
       formIsValid: true,
-      mode: 'login',
+      type: 'login',
       error: null
     }
   },
   computed: {
     submitButtonCaption() {
-      if (this.mode === 'login') {
+      if (this.type === 'login') {
         return 'Đăng nhập'
       } else {
         return 'Đăng ký'
       }
     },
     switchModeButtonCaption() {
-      if (this.mode === 'login') {
+      if (this.type === 'login') {
         return 'Đăng ký'
       } else {
         return 'Đăng nhập'
@@ -69,28 +69,27 @@ export default {
         return
       }
       // send http request
+      const account = {
+        email: this.email,
+        password: this.password
+      }
       try {
-        if (this.mode === 'login') {
-          await this.$store.dispatch('login', {
-            email: this.email,
-            password: this.password,
-            type: 'login'
-          })
+        if (this.type === 'login') {
+          await this.$store.dispatch('login', account)
         } else {
-          await this.$store.dispatch('signup', {
-            email: this.email,
-            password: this.password,
-            type: 'signup'
-          })
+          const data = await this.$store.dispatch('signup', account)
+          console.log(data)
         }
+
+        this.$router.replace('/books')
       } catch (err) {
-        this.error = err
+        this.error = err || 'Đã xảy ra lỗi!'
       }
       this.email = ''
       this.password = ''
     },
     switchAuthMode() {
-      this.mode = this.mode === 'login' ? 'signup' : 'login'
+      this.type = this.type === 'login' ? 'signup' : 'login'
     }
   },
   components: {
