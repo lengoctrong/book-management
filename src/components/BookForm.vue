@@ -12,9 +12,8 @@
     </div>
     <div class="form-group">
       <label for="date">NSX</label>
-
       <VueDatePicker name="date" v-model="book.date"></VueDatePicker>
-
+      <Field hidden name="date" type="text" class="form-control" v-model="book.date" />
       <ErrorMessage name="date" class="error-feedback" />
     </div>
 
@@ -56,6 +55,7 @@ import * as yup from 'yup'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import BookService from '@/services/bookService'
+import VsToast from '@vuesimple/vs-toast'
 
 export default {
   props: {
@@ -87,7 +87,6 @@ export default {
         .min(2, 'Tiêu đề phải có ít nhất 2 ký tự.'),
       author: yup.string().required('Tác giả phải không được để trống.'),
       quantity: yup.number().required('Số lượng phải không được để trống.'),
-      date: yup.date(),
       image: yup.string().required('Hình ảnh không được để trống.'),
       category: yup.string().required('Thể loại không được để trống.')
     })
@@ -102,28 +101,38 @@ export default {
         category: '',
         error: null
       },
-      bookFormSchema,
-      name: '',
-      date: null
+      bookFormSchema
     }
   },
 
   methods: {
-    async submitBook(_, { resetForm }) {
+    openToast(position, variant) {
+      VsToast.show({
+        title: variant.title,
+        message: variant.message,
+        variant,
+        position
+      })
+    },
+    async submitBook(values, { resetForm }) {
       try {
-        await BookService.create(this.book)
+        await BookService.create({ ...values, date: values.date.toString() })
+        resetForm({
+          title: '',
+          author: '',
+          date: '',
+          image: '',
+          quantity: null,
+          borrow: false,
+          category: ''
+        })
+        this.openToast('top-center', {
+          title: 'Thành công',
+          message: 'Sách đã được thêm vào danh sách.'
+        })
       } catch (err) {
         this.error = err
       }
-      resetForm({
-        title: '',
-        author: '',
-        date: null,
-        image: '',
-        quantity: null,
-        borrow: false,
-        category: ''
-      })
     }
   }
 }

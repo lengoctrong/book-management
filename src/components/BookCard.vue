@@ -1,21 +1,3 @@
-<script>
-import BookService from '@/services/bookService'
-export default {
-  props: {
-    book: {
-      type: Object,
-      require: true
-    }
-  },
-  methods: {
-    async borrowBook() {
-      const data = await BookService.create({ test: '123' })
-      console.log(data)
-    }
-  }
-}
-</script>
-
 <template>
   <div>
     <div class="p-1" style="height: 350px">
@@ -42,9 +24,48 @@ export default {
       {{ book.quantity > 0 ? book.quantity : 'Đã hết' }} (cuốn)
     </div>
     <router-link :to="{ name: 'book.edit', params: { id: book._id } }">
-      <button class="mt-2 badge badge-warning border" @click="borrowBook">
+      <button v-if="isAdmin" class="mt-2 badge badge-warning border">
         <i class="fas fa-edit"></i> Hiệu chỉnh
       </button>
     </router-link>
+    <button v-if="isAdmin" class="mt-2 badge badge-danger border" @click="handleDelete(book._id)">
+      <i class="fas fa-trash"></i> Xóa
+    </button>
   </div>
 </template>
+
+<script>
+import BookService from '@/services/bookService'
+import VsToast from '@vuesimple/vs-toast'
+export default {
+  props: {
+    book: {
+      type: Object,
+      require: true
+    }
+  },
+  methods: {
+    openToast(position, variant) {
+      VsToast.show({
+        title: variant.title,
+        message: variant.message,
+        variant,
+        position
+      })
+    },
+    async handleDelete(id) {
+      console.log('delete book has id: ', id)
+      try {
+        await BookService.delete(id)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  },
+  computed: {
+    isAdmin() {
+      return this.$store.getters.isAdmin
+    }
+  }
+}
+</script>

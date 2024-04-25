@@ -9,6 +9,22 @@
           Sách
           <i class="fas fa-book"></i>
         </h4>
+        <div>
+          <span>Phân loại: </span>
+          <div class="categories" :class="{ 'line-clamp': !showAllCategories }">
+            <button
+              v-for="category in categories"
+              :key="category"
+              class="badge badge-muted border mx-1 my-1"
+              @click="filterByCategory(category)"
+            >
+              {{ category }}
+            </button>
+            <button class="badge badge-muted border" @click="toggleShowAllCategories">
+              {{ showAllCategories ? 'Thu gọn' : '...' }}
+            </button>
+          </div>
+        </div>
       </div>
       <BookList
         v-if="paginatedBooks.length > 0"
@@ -64,7 +80,9 @@ export default {
       searchText: '',
       activeIndex: -1,
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10,
+      selectedCategory: null,
+      showAllCategories: false
     }
   },
   watch: {
@@ -83,16 +101,27 @@ export default {
     },
     booksStrings() {
       return this.books.map((book) => {
-        const { title, author, years, image, quantity, borrow, category } = book
-        return [title, author, years, image, quantity, borrow, category].join('')
+        const { title, author, date, image, quantity, borrow, category } = book
+        return [title, author, date, image, quantity, borrow, category].join('')
       })
     },
+    categories() {
+      const categories = this.books.map((book) => book.category)
+      return [...new Set(categories)]
+    },
     filteredBooks() {
-      if (!this.searchText) return this.books
+      if (!this.searchText && !this.selectedCategory) return this.books
 
-      return this.books.filter((book) =>
-        book.title.toLowerCase().includes(this.searchText.toLowerCase())
-      )
+      let filteredBooks = this.books
+      if (this.searchText) {
+        filteredBooks = filteredBooks.filter((book) =>
+          book.title.toLowerCase().includes(this.searchText.toLowerCase())
+        )
+      }
+      if (this.selectedCategory) {
+        filteredBooks = filteredBooks.filter((book) => book.category === this.selectedCategory)
+      }
+      return filteredBooks
     },
     activeBook() {
       if (this.activeIndex < 0) return null
@@ -103,6 +132,12 @@ export default {
     }
   },
   methods: {
+    toggleShowAllCategories() {
+      this.showAllCategories = !this.showAllCategories
+    },
+    filterByCategory(category) {
+      this.selectedCategory = category
+    },
     async retrieveBooks() {
       this.isLoading = true
       try {
@@ -128,5 +163,15 @@ export default {
 .page {
   text-align: left;
   max-width: 750px;
+}
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 </style>
