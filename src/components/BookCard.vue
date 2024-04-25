@@ -31,7 +31,7 @@ export default {
     </div>
     <div class="p-1">
       <strong>NSX: </strong>
-      {{ book.years }}
+      {{ book.date }}
     </div>
     <div class="p-1">
       <strong>Thể loại: </strong>
@@ -41,8 +41,10 @@ export default {
       <strong>Số lượng: </strong>
       {{ book.quantity > 0 ? book.quantity : 'Đã hết' }} (cuốn)
     </div>
-    <button class="mt-2 badge badge-warning border" @click="borrowBook">
-      <i class="fas fa-edit"></i> Đăng ký mượn
-    </button>
+    <router-link :to="{ name: 'book.edit', params: { id: book._id } }">
+      <button class="mt-2 badge badge-warning border" @click="borrowBook">
+        <i class="fas fa-edit"></i> Hiệu chỉnh
+      </button>
+    </router-link>
   </div>
 </template>

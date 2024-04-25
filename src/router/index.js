@@ -1,7 +1,9 @@
 import BookAdd from '@/views/BookAdd.vue'
+import BookEdit from '@/views/BookEdit.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import BookView from '../views/BookView.vue'
 import UserAuth from '../views/UserAuth.vue'
+
 const routes = [
   {
     path: '/',
@@ -15,9 +17,14 @@ const routes = [
   },
   {
     path: '/book-add',
-    alias: '/',
     name: 'book.add',
     component: BookAdd
+  },
+  {
+    path: '/book-edit/:id',
+    name: 'book.edit',
+    component: BookEdit,
+    props: true
   },
   {
     path: '/auth',

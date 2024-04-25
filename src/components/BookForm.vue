@@ -2,7 +2,7 @@
   <VeeForm @submit="submitBook" :validation-schema="bookFormSchema">
     <div class="form-group">
       <label for="title">Tiêu đề</label>
-      <Field ref="titleInput" name="title" type="text" class="form-control" v-model="book.title" />
+      <Field name="title" type="text" class="form-control" v-model="book.title" />
       <ErrorMessage name="title" class="error-feedback" />
     </div>
     <div class="form-group">
@@ -43,8 +43,8 @@
     </div>
 
     <div class="form-group">
-      <button class="btn btn-primary">Lưu</button>
-      <button class="ml-2 btn btn-warning" type="button" @click="resetForm">Làm mới</button>
+      <button class="btn btn-primary mr-1">Lưu</button>
+      <button class="btn btn-warning" type="reset">Reset</button>
     </div>
   </VeeForm>
 </template>
@@ -58,6 +58,21 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import BookService from '@/services/bookService'
 
 export default {
+  props: {
+    selectedBook: {
+      type: Object,
+      require: false,
+      default: () => ({
+        title: '',
+        author: '',
+        date: null,
+        image: '',
+        quantity: null,
+        borrow: false,
+        category: ''
+      })
+    }
+  },
   components: {
     VeeForm,
     Field,
@@ -72,7 +87,7 @@ export default {
         .min(2, 'Tiêu đề phải có ít nhất 2 ký tự.'),
       author: yup.string().required('Tác giả phải không được để trống.'),
       quantity: yup.number().required('Số lượng phải không được để trống.'),
-      date: yup.date().required('Ngày không được để trống.'),
+      date: yup.date(),
       image: yup.string().required('Hình ảnh không được để trống.'),
       category: yup.string().required('Thể loại không được để trống.')
     })
@@ -92,18 +107,15 @@ export default {
       date: null
     }
   },
+
   methods: {
-    async submitBook() {
-      console.log(this.book)
+    async submitBook(_, { resetForm }) {
       try {
         await BookService.create(this.book)
       } catch (err) {
         this.error = err
       }
-      this.resetForm()
-    },
-    resetForm() {
-      this.book = {
+      resetForm({
         title: '',
         author: '',
         date: null,
@@ -111,9 +123,7 @@ export default {
         quantity: null,
         borrow: false,
         category: ''
-      }
-      // focus form element
-      this.$ref.titleInput.focus()
+      })
     }
   }
 }
