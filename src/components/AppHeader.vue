@@ -7,6 +7,11 @@
           >Loại sách <i class="fas fa-book"></i
         ></router-link>
       </li>
+      <li class="nav-item">
+        <router-link :to="{ name: 'book.borrow' }" class="nav-link"
+          >Sách mượn <i class="fas fa-book"></i
+        ></router-link>
+      </li>
       <li class="nav-item" v-if="isAdmin">
         <router-link :to="{ name: 'book.add' }" class="nav-link"
           >Quản lý <i class="fas fa-book"></i

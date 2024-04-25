@@ -31,6 +31,12 @@
     <button v-if="isAdmin" class="mt-2 badge badge-danger border" @click="handleDelete(book._id)">
       <i class="fas fa-trash"></i> Xóa
     </button>
+    <button
+      class="mt-2 badge badge-success border"
+      @click="handleUpdateBook(book._id, { borrow: true })"
+    >
+      <i class="fas fa-plus"></i> Mượn sách
+    </button>
   </div>
 </template>
 
@@ -45,6 +51,13 @@ export default {
     }
   },
   methods: {
+    async handleUpdateBook(id, data) {
+      try {
+        await BookService.update(id, data)
+      } catch (err) {
+        console.log(err)
+      }
+    },
     openToast(position, variant) {
       VsToast.show({
         title: variant.title,

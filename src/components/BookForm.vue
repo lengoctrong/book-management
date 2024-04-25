@@ -116,7 +116,7 @@ export default {
     },
     async submitBook(values, { resetForm }) {
       try {
-        await BookService.create({ ...values, date: values.date.toString() })
+        await BookService.create({ ...values, borrow: false, date: values.date.toString() })
         resetForm({
           title: '',
           author: '',

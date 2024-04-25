@@ -1,4 +1,5 @@
 import BookAdd from '@/views/BookAdd.vue'
+import BookBorrow from '@/views/BookBorrow.vue'
 import BookEdit from '@/views/BookEdit.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import BookView from '../views/BookView.vue'
@@ -19,6 +20,11 @@ const routes = [
     path: '/book-add',
     name: 'book.add',
     component: BookAdd
+  },
+  {
+    path: '/book-borrow',
+    name: 'book.borrow',
+    component: BookBorrow
   },
   {
     path: '/book-edit/:id',
